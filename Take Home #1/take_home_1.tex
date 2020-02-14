@@ -229,7 +229,28 @@
             &&&(-2a)\frac{\cosh(a\pi)}{\cosh(a\pi)} + (1+a^2)\frac{\sinh(a\pi)}{\cosh(a\pi)} = 0 \\
             &\iff&& (1+a^2)\tanh (a\pi) = 2a
         \end{align*}
-        Therefore, the eignevalues $\lambda <0$ are the solutions to the trancendental equation $(1+a^2)\tanh (a\pi) = 2a$, $a=\sqrt{-\lambda}$.
+        
+        Therefore, the eignevalues $\lambda <0$ are the solutions to the transcendental equation $(1+a^2)\tanh (a\pi) = 2a$, $a=\sqrt{-\lambda}$. These solutions may be found graphically by plotting $y_1 =  (1+a^2)\tanh (a\pi) - 2a$ and determining the intercepts with the $x$-axis:
+        \begin{center}
+            \begin{tikzpicture}
+            \begin{axis}[
+            axis lines=center,
+            xlabel={$a=\sqrt{-\lambda}$},
+            xlabel style={right},
+            ylabel style={above left},
+            xmin=-2.0,
+            xmax=2.0,
+            ymin=-0.3,
+            ymax=0.3,
+            thick,
+            samples=100,
+            clip=false,            
+            ]
+            \addplot+[<-, dashed, mark=none, domain=-1.5:0, blue] {(1+\x^2)*tanh(\x*pi) - 2*\x};
+            \addplot+[->, mark=none, domain=0:1.5, blue] {(1+\x^2)*tanh(\x*pi) - 2*\x} node[pos=0.9, right] {\footnotesize $y_1=(1+x^2)\tanh(x\pi)-2x$};
+            \end{axis} 
+            \end{tikzpicture}
+        \end{center}
 %        which implies that one of $C_2$, $(1-a^2)$, or $\sinh(a\pi)$ is $0$.
 %        \begin{enumerate}[label=\roman*.)]
 %            \item If $C_2 = 0$, then $C_1 + 0a=0 \implies C_1 = 0$, which results in the eignenfunction $f\equiv 0$. Since $f\equiv 0$ cannot be an eigenfunction, we ignore this case and consider the other possibilities.
@@ -238,7 +259,7 @@
 %        \end{enumerate}
 %    Therefore, the only eignenvalue $\lambda < 0$ is \underline{$\lambda = -1$} with corresponding eigenfunction \\\underline{$f \sim -\pi\cosh x + \sinh x$}.
     
-    \item To be completed.
+    \item For right end points $p$ large, the eignenvalues $\lambda <0$ approach $-1$.
     \end{enumerate}
 \end{proof}
 
