@@ -225,7 +225,11 @@
             && &f(\pi) - f'(\pi) = \Big(-C_2a \cosh (a\pi) + C_2 \sinh (a\pi)\Big) - \Big(-  C_2a^2\sinh (a \pi) + C_2 a\cosh (a\pi)\Big) =0 \\
             &\iff&& -a \cosh(a\pi) + \sinh(a\pi) + a^2 \sinh(a\pi) - a \cosh(a\pi) = 0\\
             &\iff&& (-2a)\cosh(a\pi) + (1+a^2)\sinh(a\pi) = 0\\
+            \intertext{Since $\cosh(a\pi) \neq 0$ for $a>0$},
+            &&&(-2a)\frac{\cosh(a\pi)}{\cosh(a\pi)} + (1+a^2)\frac{\sinh(a\pi)}{\cosh(a\pi)} = 0 \\
+            &\iff&& (1+a^2)\tanh (a\pi) = 2a
         \end{align*}
+        Therefore, the eignevalues $\lambda <0$ are the solutions to the trancendental equation $(1+a^2)\tanh (a\pi) = 2a$, $a=\sqrt{-\lambda}$.
 %        which implies that one of $C_2$, $(1-a^2)$, or $\sinh(a\pi)$ is $0$.
 %        \begin{enumerate}[label=\roman*.)]
 %            \item If $C_2 = 0$, then $C_1 + 0a=0 \implies C_1 = 0$, which results in the eignenfunction $f\equiv 0$. Since $f\equiv 0$ cannot be an eigenfunction, we ignore this case and consider the other possibilities.
@@ -234,7 +238,7 @@
 %        \end{enumerate}
 %    Therefore, the only eignenvalue $\lambda < 0$ is \underline{$\lambda = -1$} with corresponding eigenfunction \\\underline{$f \sim -\pi\cosh x + \sinh x$}.
     
-    \item The negative eigenvalues for the given SL-BVP are the same regardless of the value of the right end point $p$.
+    \item To be completed.
     \end{enumerate}
 \end{proof}
 
