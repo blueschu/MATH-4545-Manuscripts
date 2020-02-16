@@ -7,6 +7,9 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 
+% For problem 3b
+\usepgfplotslibrary{groupplots}
+
 \geometry{left=0.75in,right=0.75in,top=1in,bottom=1in}
 
 \theoremstyle{plain}
@@ -60,7 +63,7 @@
         f(x) = x^2 \sim  \frac{\pi^2}{3} + 4\sum_{n=1}^\infty \left(\frac{1}{n^2 }(-1)^n\right)\cos(nx)
     \end{equation*}
     
-    Since this series converges to the even piecewise extension of $f$, the series evaluated at the endpoint $x=\pi$ will equal $f(\pi)$:
+    Since this series converges to the even piecewise extension of $f$, the series evaluated at the endpoint $x=\pi$ will equal $f(\pi)$. As such, we can compute:
     \begin{align*}
     &&f(\pi) = \pi^2 &= \frac{\pi^2}{3} + 4\sum_{n=1}^\infty \left(\frac{1}{n^2 }(-1)^n\right)\cos(n\pi) = \frac{\pi^2}{3} + 4\sum_{n=1}^\infty \frac{1}{n^2 }(-1)^n(-1)^n = \frac{\pi^2}{3} + 4\sum_{n=1}^\infty \frac{1}{n^2 } \\
     &\iff& \frac{2\pi^2}{3} & = \hphantom{\frac{\pi^2}{3} +\ } 4\sum_{n=1}^\infty \frac{1}{n^2 } = 4\left(1 + \frac{1}{2^2} + \frac{1}{3^2} + \frac{1}{4^2} + \cdots\right) \\
@@ -220,17 +223,18 @@
                 f'=-C_2 a^2 \sinh(ax) + C_2 a \cosh(ax)
             \end{cases}
         \end{align*}
-        Since $f(\pi) -f'(\pi) = 0$,
+        Since $f(\pi) -f'(\pi) = 0$, and $C_2 \neq 0$,
         \begin{align*}
             && &f(\pi) - f'(\pi) = \Big(-C_2a \cosh (a\pi) + C_2 \sinh (a\pi)\Big) - \Big(-  C_2a^2\sinh (a \pi) + C_2 a\cosh (a\pi)\Big) =0 \\
             &\iff&& -a \cosh(a\pi) + \sinh(a\pi) + a^2 \sinh(a\pi) - a \cosh(a\pi) = 0\\
             &\iff&& (-2a)\cosh(a\pi) + (1+a^2)\sinh(a\pi) = 0\\
             \intertext{Since $\cosh(a\pi) \neq 0$ for $a>0$},
             &&&(-2a)\frac{\cosh(a\pi)}{\cosh(a\pi)} + (1+a^2)\frac{\sinh(a\pi)}{\cosh(a\pi)} = 0 \\
-            &\iff&& (1+a^2)\tanh (a\pi) = 2a
+            &\iff& &-2a+(1+a^2)\tanh(a\pi) = 0 \\
+            &\iff&& \tanh (a\pi) = \frac{2a}{1+a^2}
         \end{align*}
         
-        Therefore, the eignevalues $\lambda <0$ are the solutions to the transcendental equation $(1+a^2)\tanh (a\pi) = 2a$, $a=\sqrt{-\lambda}$. These solutions may be found graphically by plotting $y_1 =  (1+a^2)\tanh (a\pi) - 2a$ and determining the intercepts with the $x$-axis:
+        Therefore, the eignevalues $\lambda <0$ are the solutions to the transcendental equation $\tanh (a\pi) = 2a/(1+a^2)$, $a=\sqrt{-\lambda}$. These solutions may be found graphically by plotting $y_1 = \tanh (a\pi) - 2a/(1+a^2)$ and determining the intercepts with the $x$-axis:
         \begin{center}
             \begin{tikzpicture}
             \begin{axis}[
@@ -247,19 +251,68 @@
             clip=false,            
             ]
             \addplot+[<-, dashed, mark=none, domain=-1.5:0, blue] {(1+\x^2)*tanh(\x*pi) - 2*\x};
-            \addplot+[->, mark=none, domain=0:1.5, blue] {(1+\x^2)*tanh(\x*pi) - 2*\x} node[pos=0.9, right] {\footnotesize $y_1=(1+x^2)\tanh(x\pi)-2x$};
+
+            \addplot+[->, mark=none, domain=0:1.5, blue] {tanh(\x*pi) - (2*\x)/(1+\x^2)} node[above right] {\footnotesize $y_1=\tanh(a\pi)-2a/(1+a^2)$};
+            
+            \addplot[mark=o] coordinates {(0,0)};
+            \addplot[mark=*] coordinates {(0.88225181948493,0) (1.0715068662678,0)};
             \end{axis} 
             \end{tikzpicture}
         \end{center}
-%        which implies that one of $C_2$, $(1-a^2)$, or $\sinh(a\pi)$ is $0$.
-%        \begin{enumerate}[label=\roman*.)]
-%            \item If $C_2 = 0$, then $C_1 + 0a=0 \implies C_1 = 0$, which results in the eignenfunction $f\equiv 0$. Since $f\equiv 0$ cannot be an eigenfunction, we ignore this case and consider the other possibilities.
-%            \item If $(1-a^2) = 0$, then $a=1$. This solution corresponds to the eignenvalue $\lambda = -a^2 = -1$, which has the associated eigenfunction $f\sim -\pi\cosh -x + \sinh -x$.
-%            \item For $a>0$, $\sinh(a\pi)=0$ has no solutions.
-%        \end{enumerate}
-%    Therefore, the only eignenvalue $\lambda < 0$ is \underline{$\lambda = -1$} with corresponding eigenfunction \\\underline{$f \sim -\pi\cosh x + \sinh x$}.
+        This yields two solutions, $\sqrt{-\lambda_1}\approx 0.88225$ and $\sqrt{-\lambda_2}\approx 1.07151$.
     
-    \item For right end points $p$ large, the eignenvalues $\lambda <0$ approach $-1$.
+    \item As the right end points $p$ increases, the two intercepts found above grow closer to $\sqrt{-\lambda}=a=1$:
+    
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{groupplot}[group style={
+                group name=myplot,
+                vertical sep=2cm,
+                horizontal sep=2cm,
+                group size= 2 by 2,
+            },
+            ymax=0.5,
+            height=5cm,
+            width=6.4cm
+            ]
+            
+        \nextgroupplot[title={$p=\pi$}, axis lines=center, samples=100,
+            legend to name=firstplot
+        ]
+         % (Relative) Coordinate at top of the first plot
+        \coordinate (c1) at (rel axis cs:0,1);
+        \addplot+[->, mark=none, domain=0:1.5, blue] {tanh(\x*pi) - (2*\x)/(1+\x^2)} node[pos=0.9, above left] {\footnotesize $y_1$};
+        \addplot[mark=o] coordinates {(0,0)};
+        \addplot[mark=*] coordinates {(0.88225181948493,0) (1.0715068662678,0)};
+        \addlegendentry{$y_1=\tanh(ap)-\frac{2a}{1+a^2}$}
+        
+        \nextgroupplot[title={$p=1.2\pi$}, axis lines=center, samples=100]
+        % (Relative) Coordinate at top of the second plot
+        \coordinate (c2) at (rel axis cs:1,1);
+        \addplot+[->, mark=none, domain=0:1.5, blue] {(1+\x^2)*tanh(\x*1.2*pi) - 2*\x} node[pos=0.9, above left] {\footnotesize $y_1$};
+        \addplot[mark=o] coordinates {(0,0)};
+        \addplot[mark=*] coordinates {(0.9447906,0) (1.040395,0)};
+        
+        \nextgroupplot[title={$p=1.5\pi$}, axis lines=center, samples=100]
+        \addplot+[->, mark=none, domain=0:1.5, blue] {tanh(\x*1.5*pi) - (2*\x)/(1+\x^2)} node[pos=0.9, above left] {\footnotesize $y_1$};
+        \addplot[mark=o] coordinates {(0,0)};
+        \addplot[mark=*] coordinates {(0.9804959,0) (1.01674,0)};
+        
+        \nextgroupplot[title={$p=2\pi$}, axis lines=center, samples=100]
+        \addplot+[->, mark=none, domain=0:1.5, blue] {tanh(\x*2*pi) - (2*\x)/(1+\x^2)} node[pos=0.9, above left] {\footnotesize $y_1$};
+        \addplot[mark=o] coordinates {(0,0)};
+        \addplot[mark=*] coordinates {(0.996182,0) (1.0036567,0)};
+        
+        \end{groupplot}
+        % Sigle legened solution from
+        % https://tex.stackexchange.com/questions/315224/center-legend-above-or-below-a-groupplot-without-references
+        \coordinate (c3) at ($(c1)!.5!(c2)$);
+        \node[below] at (c3 |- current bounding box.south)
+        {\pgfplotslegendfromname{firstplot}};
+        \end{tikzpicture}
+    \end{center}
+    
+    Therefore, for right end points $p$ large, the eignenvalues $\lambda <0$ approach $-1$.
     \end{enumerate}
 \end{proof}
 
