@@ -228,7 +228,7 @@
             && &f(\pi) - f'(\pi) = \Big(-C_2a \cosh (a\pi) + C_2 \sinh (a\pi)\Big) - \Big(-  C_2a^2\sinh (a \pi) + C_2 a\cosh (a\pi)\Big) =0 \\
             &\iff&& -a \cosh(a\pi) + \sinh(a\pi) + a^2 \sinh(a\pi) - a \cosh(a\pi) = 0\\
             &\iff&& (-2a)\cosh(a\pi) + (1+a^2)\sinh(a\pi) = 0\\
-            \intertext{Since $\cosh(a\pi) \neq 0$ for $a>0$},
+            \intertext{Since $\cosh(a\pi) \neq 0$,},
             &&&(-2a)\frac{\cosh(a\pi)}{\cosh(a\pi)} + (1+a^2)\frac{\sinh(a\pi)}{\cosh(a\pi)} = 0 \\
             &\iff& &-2a+(1+a^2)\tanh(a\pi) = 0 \\
             &\iff&& \tanh (a\pi) = \frac{2a}{1+a^2}
@@ -281,25 +281,25 @@
         ]
          % (Relative) Coordinate at top of the first plot
         \coordinate (c1) at (rel axis cs:0,1);
-        \addplot+[->, mark=none, domain=0:1.5, blue] {tanh(\x*pi) - (2*\x)/(1+\x^2)} node[pos=0.9, above left] {\footnotesize $y_1$};
+        \addplot+[->, mark=none, domain=0:1.5, blue] {tanh(\x*pi) - (2*\x)/(1+\x^2)};
         \addplot[mark=o] coordinates {(0,0)};
         \addplot[mark=*] coordinates {(0.88225181948493,0) (1.0715068662678,0)};
-        \addlegendentry{$y_1=\tanh(ap)-\frac{2a}{1+a^2}$}
+        \addlegendentry{$\tanh(ap)-\frac{2a}{1+a^2}$}
         
         \nextgroupplot[title={$p=1.2\pi$}, axis lines=center, samples=100]
         % (Relative) Coordinate at top of the second plot
         \coordinate (c2) at (rel axis cs:1,1);
-        \addplot+[->, mark=none, domain=0:1.5, blue] {(1+\x^2)*tanh(\x*1.2*pi) - 2*\x} node[pos=0.9, above left] {\footnotesize $y_1$};
+        \addplot+[->, mark=none, domain=0:1.5, blue] {(1+\x^2)*tanh(\x*1.2*pi) - 2*\x};
         \addplot[mark=o] coordinates {(0,0)};
         \addplot[mark=*] coordinates {(0.9447906,0) (1.040395,0)};
         
         \nextgroupplot[title={$p=1.5\pi$}, axis lines=center, samples=100]
-        \addplot+[->, mark=none, domain=0:1.5, blue] {tanh(\x*1.5*pi) - (2*\x)/(1+\x^2)} node[pos=0.9, above left] {\footnotesize $y_1$};
+        \addplot+[->, mark=none, domain=0:1.5, blue] {tanh(\x*1.5*pi) - (2*\x)/(1+\x^2)};
         \addplot[mark=o] coordinates {(0,0)};
         \addplot[mark=*] coordinates {(0.9804959,0) (1.01674,0)};
         
         \nextgroupplot[title={$p=2\pi$}, axis lines=center, samples=100]
-        \addplot+[->, mark=none, domain=0:1.5, blue] {tanh(\x*2*pi) - (2*\x)/(1+\x^2)} node[pos=0.9, above left] {\footnotesize $y_1$};
+        \addplot+[->, mark=none, domain=0:1.5, blue] {tanh(\x*2*pi) - (2*\x)/(1+\x^2)};
         \addplot[mark=o] coordinates {(0,0)};
         \addplot[mark=*] coordinates {(0.996182,0) (1.0036567,0)};
         
