@@ -6,6 +6,8 @@
 \usepackage{geometry}
 \usepackage[makeroom]{cancel}
 
+\usepackage{framed}
+
 \geometry{left=0.75in,right=0.75in,top=1in,bottom=1in}
 
 \theoremstyle{plain}
@@ -267,7 +269,7 @@
             \mu(x, 0) = \sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) &= f(x) = 75
             \shortintertext{so}
             c_n = \frac{\displaystyle \int_0^1 f(x) X_n(x)\,\mathrm{d}x}{\displaystyle\int_0^1 X^2_n(x)\,\mathrm{d}x} &= \frac{\displaystyle 75\int_0^1  \sin(\sqrt{\lambda_n}x)\,\mathrm{d}x}{\displaystyle\int_0^1 \sin^2(\sqrt{\lambda_n}x)\,\mathrm{d}x} = \frac{\displaystyle \frac{75}{\sqrt{\lambda_n}}\left.\cos(\sqrt{\lambda_n}x)\right|_0^1}{\displaystyle \int_0^1 \left(\frac{1}{2} - \frac{1}{2} \cos(2\sqrt{\lambda_n}x)\right)\,\mathrm{d}x} \\
-            &= \frac{\displaystyle \frac{75}{\sqrt{\lambda_n}}\left(\cos(\sqrt{\lambda_n} )- 1\right)}{\displaystyle \frac{1}{2} - \frac{1}{4\sqrt{\lambda_n}}\left.\sin(2\sqrt{\lambda_n}x)\right|_0^1 } = \frac{\displaystyle \frac{75}{\sqrt{\lambda_n}}\left(\cos(\sqrt{\lambda_n} )- 1\right)}{\displaystyle \frac{1}{2} - \frac{1}{4\sqrt{\lambda_n}}\sin(2\sqrt{\lambda_n})}
+            &= \frac{\displaystyle \frac{75}{\sqrt{\lambda_n}}\left(\cos(\sqrt{\lambda_n} )- 1\right)}{\displaystyle \frac{1}{2} - \frac{1}{4\sqrt{\lambda_n}}\left.\sin(2\sqrt{\lambda_n}x)\right|_0^1 } = \frac{\displaystyle \frac{75}{\sqrt{\lambda_n}}\left(\cos(\sqrt{\lambda_n} )- 1\right)}{\displaystyle \frac{1}{2} - \frac{1}{4\sqrt{\lambda_n}}\sin(2\sqrt{\lambda_n})} \tag{$\ast$}
         \end{align*}
         The complete solution is therefore
         \begin{equation*}
@@ -276,7 +278,7 @@
         where the eigenvalues $\lambda_n$ satisfy the transcendental equation $\tan(\sqrt{\lambda_n}) = -\sqrt{\lambda_n}$.
         
         \item \begin{equation*}
-        \lim\limits_{t \to \infty} \mu(x, t) =  \lim\limits_{t \to \infty}\sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t} \geq \sum_{n=1}^\infty \lim\limits_{t \to \infty} c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t} = \sum_{n=1}^\infty 0 = 0.
+        \lim\limits_{t \to \infty} \mu(x, t) =  \lim\limits_{t \to \infty}\sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t} \geq \sum_{n=1}^\infty \lim\limits_{t \to \infty} c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t} = \sum_{n=1}^\infty 0 = \boxed{0}.
         \end{equation*}
         
         \item Using the same setup as part a), we produce the regular SL-BVP
@@ -284,7 +286,71 @@
             X''(x) + \lambda X(x) = 0, \qquad 0 < x < 1, \\
             X(0) = 0, \qquad X(1) - X'(1) = 0.
         \end{gather*}
+         \underline{If $\lambda = 0$,} then $X = \alpha x + \beta$ and $X' = \alpha$.  \begin{align*}
+        \shortintertext{Since $X(0)=0$,}
+        \alpha \cdot 0+\beta = 0 \implies &\beta = 0  &\text{so}  &  &X=\alpha x \text{ and } X' = \alpha.
+        \shortintertext{Since $X(1) - X'(1) = 0$,}
+        1\alpha - \alpha = 0 \implies & \alpha(1-1) = 0 &\text{so} &&  X=\alpha x \text{ and } X' = \alpha.
+        \end{align*}
+        Therefore $\lambda = 0$ is an eigenvalue with corresponding eigenfunctions $X_0\sim x$.
         
+        \underline{If $\lambda > 0$,} \begin{equation*}
+        X=C_1 \cos \left(\sqrt{\lambda}x\right) + C_2 \sin\left(\sqrt{\lambda}x\right), \qquad
+        X'=-C_1 \sqrt{\lambda}\sin \left(\sqrt{\lambda}x\right) + C_2 \sqrt{\lambda}\cos\left(\sqrt{\lambda}x\right)
+        \end{equation*}
+        \begin{gather*}
+        \shortintertext{Since $X(0)=0$,}
+        C_1 + 0 = 0 \implies  C_1 = 0  \qquad\text{so} \qquad \begin{cases}
+        X=C_2 \sin(\sqrt{\lambda}x), \\ X'=C_2\sqrt{\lambda}\cos(\sqrt{\lambda}x)\end{cases}
+        \shortintertext{Since $X(1) - X'(1) = 0$ and $C_2 \neq 0$,}
+        C_2\sin(\sqrt{\lambda}) - C_2\sqrt{\lambda}\cos(\sqrt{\lambda}) = 0 \quad \implies\quad \tan(\sqrt{\lambda}) = \sqrt{\lambda}
+        \end{gather*}
+        Therefore, the eigenvalues $\lambda_n > 0$ are the solutions to the transcendental equation $\tan(\sqrt{\lambda_n}) = \sqrt{\lambda_n}$ with corresponding eigenfunctions $X_n \sim \sin(\sqrt{\lambda_n}x)$.
+        
+        \underline{If $\lambda < 0$},  let $\lambda = -a^2$ with $a>0$. Then
+        \begin{equation*}
+        X = C_1 \cosh (a x) + C_2 \sinh (ax) \quad\text{and}\quad X' =  C_1 a\sinh (a x) + C_2 a\cosh (ax).
+        \end{equation*}
+        \begin{align*}
+        \shortintertext{Since $X(0)=0$,}
+        &&X(0) = C_1 \cosh (0) + C_2 \sinh (0) &= 0\\
+        &\iff& C_1 \cdot 1 + C_2 \cdot 0 &= 0 \\
+        &\iff& C_1 &= 0 &\text{so} &  &\begin{cases}
+        X=C_2 \sinh(ax), \\ X'=C_2a\cosh(ax)\end{cases}
+        \shortintertext{Since $X(1) - X'(1) = 0$ and $C_2 \neq 0$,}
+        &&\cancel{C_2} \sinh(a) - \cancel{C_2} a \cosh(a) &= 0\\
+        &\iff& \tanh(a) &= a
+        \end{align*}
+        Therefore the eigenvalues $\lambda < 0$ will be the solution to the transcendental equation $ \tanh(a) = a$. To find these solutions, we consider the graphs of $y_1 = \tanh a$ and $y_2 = a$. We note that at $a=0$, $y_1 = y_2$. For $a>0$, we note that $y'_1 = 1 - \tanh^2 a < 1 = y_2'$. Therefore, since $y_2$ always grows faster than $y_1$, there are no further intersections, and so the equation $\tanh a = a$ has no solution for $a>0$. Therefore, there are no eigenvalues $\lambda < 0$.
+        
+         The formal solution to the given heat problem can therefore be expressed as
+        \begin{equation*}
+        \mu(x, t) = c_0x + \sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t}.
+        \end{equation*}
+        
+        Since $\mu(x, 0) = f(x) = 75$,
+        \begin{align*}
+        \mu(x, 0) = c_0 x + \sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) &= f(x) = 75
+        \end{align*}
+        we can compute the coefficients $c_0$ and $c_n$ by expressing $f$ as an infinite sum of the eigenfunctions:
+        \begin{gather*}
+        c_0 = \frac{\displaystyle \int_0^1 f(x) X_0(x)\,\mathrm{d}x}{\displaystyle\int_0^1 X^2_0(x)\,\mathrm{d}x} = \frac{75\displaystyle \int_0^1 x\,\mathrm{d}x}{\displaystyle\int_0^1 x^2\,\mathrm{d}x} = \frac{75/2}{1/3} =\frac{75}{6}
+        \end{gather*}
+        and with $c_n$s computed as seen in ($\ast$) above.
+        
+        The complete solution is therefore
+        \begin{equation*}
+        \boxed{\mu(x, t) = \frac{75}{6}x + \sum_{n=1}^\infty \left(\frac{\displaystyle 75\left(\cos(\sqrt{\lambda_n} )- 1\right)}{\displaystyle \frac{\sqrt{\lambda_n}}{2} - \frac{1}{4}\sin(2\sqrt{\lambda_n})} \right)\sin(\sqrt{\lambda_n}x) e^{-\lambda_n t}}.
+        \end{equation*}
+        where the eigenvalues $\lambda_n$ satisfy the transcendental equation $\tan(\sqrt{\lambda_n}) = \sqrt{\lambda_n}$. Computing the limit as $t\to \infty$ produces
+         \begin{align*}
+        \lim\limits_{t \to \infty} \mu(x, t) &=  \lim\limits_{t \to \infty}\left(\frac{75}{6}x + \sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t}\right) = \lim\limits_{t \to \infty}\frac{75}{6}x + \lim\limits_{t \to \infty}\sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t} \\
+         &= \frac{75}{6}x + \lim\limits_{t \to \infty}\sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t}
+         \geq \frac{75}{6}x + \sum_{n=1}^\infty \lim\limits_{t \to \infty} c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t}\\
+         &= \frac{75}{6}x + \sum_{n=1}^\infty 0 = \boxed{\frac{75}{6}x}.
+        \end{align*}
+        
+        \item test
     \end{enumerate}
 \end{proof}
 
