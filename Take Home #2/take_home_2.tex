@@ -1,5 +1,6 @@
 \documentclass[letterpaper,11pt]{article} % Copyright (c) 2020  Brian Schubert
 \usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{mathtools}
 \usepackage{titling}
 \usepackage{enumitem}
 \usepackage{geometry}
@@ -32,7 +33,7 @@
     \begin{enumerate}[label=\alph*.)]
         \item Read Constanda 5.1.5, do 5.1.5\#1,4:\\
         \fbox{\hspace{0.02\textwidth}\parbox{0.88\textwidth}{
-            Use seperation of variables to solve the IBVP
+            Use separation of variables to solve the IBVP
             \begin{gather*}
                 \mu_t (x,t) = \mu_{xx}(x,t), \qquad -1 < x < 1, \quad t>0, \\
                 \mu(-1, t) = \mu(1,t), \quad \mu_x(-1, t) = \mu(1,t), \quad t > 0, \\
@@ -45,7 +46,21 @@
                 \item $f(x) = \begin{cases} 2, & -1 < x \leq 0, \\ x -1, & \phantom{-}0 < x < 1. \end{cases}$
             \end{enumerate}
         }}
-        \item Read Constanda 5.3.2, do 5.3.2\#1,4.
+        \item Read Constanda 5.3.2, do 5.3.2\#1,4:\\
+        \fbox{\hspace{0.02\textwidth}\parbox{0.88\textwidth}{
+                Use separation of variables to solve the BVP
+                \begin{gather*}
+                \mu_{rr}(r, \theta) + r^{-1}\mu_r(r, \theta) + r^{-2} \mu_{\theta\theta}(r, \theta) = 0, \quad 0 < r < \alpha, \quad -\pi < \theta < \pi, \\
+                \mu(r, \theta), \mu_r(r, \theta) \text{ bounded as } r\to 0^+, \quad \mu(\alpha, \theta) = f(\theta), \quad -\pi < \theta < \pi, \\
+                \mu(r, -\pi) = \mu(r,\pi), \quad \mu_{\theta}(r, -\pi) - \mu_\theta(r, \pi), \quad 0 < r < \alpha.
+                \end{gather*}
+                with constant $\alpha$ and function $f$ as indicated.
+                \begin{enumerate}[label=\#\arabic*.)]
+                    \item $\alpha = 1/2, \quad f(\theta) = 3-4\cos(3\theta)$.
+                    \addtocounter{enumii}{2} % Skip to question 4
+                    \item $\alpha =1, \quad f(x) = \begin{cases} 1, & -\pi < \theta \leq 0, \\ \theta, & \phantom{-}0 < \theta < \pi. \end{cases}$
+                \end{enumerate}
+        }}
     \end{enumerate}
 \end{problem}
 
@@ -112,12 +127,70 @@
     \end{align*}
     Therefore, the complete solution is
     \begin{equation*}
-    \boxed{\mu(x,t) = \frac{3}{4} + \sum_{n=1}^\infty \left( \frac{1}{n^2 \pi^2} \Big( (-1)^{n} - 1\Big)\cos(n\pi x) + \left(\frac{2}{n\pi}\Big((-1)^n - 1\right) - \frac{1}{n\pi}\Big) \sin(n\pi x) \right)e^{-n^2 \pi^2 t}}
+    \boxed{\mu(x,t) = \frac{3}{4} + \sum_{n=1}^\infty \left( \frac{1}{n^2 \pi^2} \Big( (-1)^{n} - 1\Big)\cos(n\pi x) + \left(\frac{2}{n\pi}\Big((-1)^n - 1\Big) - \frac{1}{n\pi}\right) \sin(n\pi x) \right)e^{-n^2 \pi^2 t}}
     \end{equation*}
 \end{proof}
 
 
-\begin{problem}
+\begin{proof}[\textbf{Solution 5.3.2\#1}] % Problem 1b (#1)
+    Let $\mu(r, \theta) = R(r)\Theta(\theta)$, which yields the Sturm-Liouville problem
+    \begin{gather*}
+    \Theta''(\theta) + \lambda \Theta(\theta) = 0, \qquad -\pi < \theta < \pi, \\
+    \Theta(-\pi) = \Theta(\pi), \qquad \Theta'(-\pi) = \Theta' (\pi).
+    \end{gather*}
+    The eigenvalues of this S-L problem are
+    \begin{gather*}
+    \lambda_0 = 0, \qquad \lambda_n = n^2, \qquad n \in \mathbb{Z}^+
+    \intertext{with corresponding eigenfunctions}
+    \Theta_0(\theta) = 1, \quad \Theta_{1n} = \cos(n\theta), \quad \Theta_{2n} = \sin (n\theta), \quad n \in \mathbb{Z}^+.
+    \end{gather*}
+    The general solution is of the form
+    \begin{equation*}
+    \mu(r, \theta) = \frac{1}{2} a_0 + \sum_{n=1}^\infty r^n \Big(a_n \cos(n\theta) + b_n \sin(n\theta) \Big).
+    \end{equation*}
+    Since $\mu(1/2, \theta) = f(\theta) = 3 - 4\cos(3\theta)$, we have
+    \begin{equation*}
+        \mu\left(\frac{1}{2}, \theta\right) = \frac{1}{2} a_0 + \sum_{n=1}^\infty \left(\frac{1}{2}\right)^n \Big(a_n \cos(n\theta) + b_n \sin(n\theta) \Big) = 3 - 4\cos(3\theta).
+    \end{equation*}
+    The coefficients $a_0$, $a_n$, and $b_n$ can be determined by match-up to be
+    \begin{equation*}
+    a_0 = 6, \qquad a_n = \begin{cases} -32, & n = 3, \\ 0, &\text{otherwise}.\end{cases}, \qquad b_n = 0.
+    \end{equation*}
+    Therefore the complete solution is
+    \begin{equation*}
+    \boxed{\mu(r, \theta) = 3 - 32r^3 \cos(3\theta)}
+    \end{equation*}
+\end{proof}
+
+
+\begin{proof}[\textbf{Solution 5.3.2\#4}] % Problem 1b (#4)
+    Using the same setup as 5.2.3\#1 above, we have
+    \begin{equation*}
+    \mu(r, \theta) = \frac{1}{2} a_0 + \sum_{n=1}^\infty r^n \Big(a_n \cos(n\theta) + b_n \sin(n\theta) \Big).
+    \end{equation*}
+     Since $\mu(1, \theta)$, we have
+    \begin{equation*}
+    \mu(1, \theta) = \frac{1}{2} a_0 + \sum_{n=1}^\infty 1^n \Big(a_n \cos(n\theta) + b_n \sin(n\theta) \Big) =\begin{cases} 1, & -\pi < \theta \leq 0, \\ \theta, & \phantom{-}0 < \theta < \pi. \end{cases}.
+    \end{equation*}
+     which is the full Fourier series for $f$. The coefficients $a_0$, $a_n$, and $b_n$ can therefore be computed by
+     \begin{align*}
+        &a_0 = \frac{1}{\pi} \int_{-\pi}^\pi f(\theta)\, \mathrm{d}\theta& &=\frac{1}{\pi}\left( \int_{-\pi}^0\!\mathrm{d}\theta + \int_0^\pi \theta \,\mathrm{d}\theta \right)= \frac{1}{\pi}\left(\pi + \left.\frac{1}{2} \theta^2 \right|_0^\pi \right)= \frac{1}{\pi}\left(\pi + \frac{\pi^2}{2}\right) = \boxed{1 + \frac{\pi}{2}}.\\
+        &a_n = \frac{1}{\pi 1^n} \int_{-\pi}^{\pi} f(\theta) \cos(n\theta)\,\mathrm{d}\theta& &= \frac{1}{\pi} \left( \cancelto{0}{\int_{-\pi}^0 \cos(n\theta) \,\mathrm{d}\theta} + \int_0^\pi \theta\cos(n\theta) \, \mathrm{d}\theta\right) \\ &&&= \frac{1}{\pi}\left(\cancelto{0}{\left.\frac{\theta}{n} \sin (n\theta) \right|_0^\pi} - \frac{1}{n}\int_0^\pi \sin (n\theta) \,\mathrm{d}\theta\right) = \frac{1}{\pi} \left( \frac{1}{n^2} \cos(n\theta)\right)_0^\pi \\
+        &&&= \frac{1}{\pi}\left(\frac{1}{n^2} \Big(\cos(n\pi) - 1\Big)\right) = \boxed{\frac{1}{n^2 \pi}\left((-1)^n -1 \right)}.\\
+        &b_n = \frac{1}{\pi 1^n} \int_{-\pi}^{\pi} f(\theta) \sin(n\theta)\,\mathrm{d}\theta& &= \frac{1}{\pi} \left(\int_{-\pi}^0 \sin(n\theta) \,\mathrm{d}\theta + \int_0^\pi \theta\sin(n\theta) \, \mathrm{d}\theta\right) \\
+        &&&=\frac{1}{\pi} \left( \left.\frac{-1}{n} \cos(n \theta)\right|_{-\pi}^0 + \left.\frac{-\theta}{n}\cos(n\theta)\right|_0^\pi - \frac{1}{n} \int_0^\pi \cos(n\theta)\,\mathrm{d}\theta\right) \\
+        &&&= \frac{1}{\pi}\left(\frac{1}{n}\Big(\cos(-n\pi) -1\Big) + \frac{-1}{n}\Big(\pi\cos(n\pi) - 0\Big) - \cancelto{0}{\left.\frac{1}{n^2} \sin(n\theta) \right|_0^\pi}\right) \\
+        &&&= \frac{1}{\pi} \left(\frac{1}{n} \Big((-1)^n - 1\Big) + \frac{\pi}{n}(-1)^{n+1}\right) = \boxed{\frac{1}{n\pi} \Big((-1)^n - 1\Big) + \frac{(-1)^{n+1}}{n}}.
+     \end{align*}
+     Therefore, the complete solution is
+      \begin{equation*}
+     \boxed{\mu(r, \theta) = \frac{1}{2} + \frac{\pi}{4} + \sum_{n=1}^\infty r^n \left(\frac{1}{n^2 \pi}\Big((-1)^n -1 \Big) \cos(n\theta) + \left(\frac{1}{n\pi} \Big((-1)^n - 1\Big) + \frac{(-1)^{n+1}}{n}\right) \sin(n\theta) \right).}
+     \end{equation*}
+\end{proof}
+
+
+    
+\begin{problem} % Problem 2
     Given the following heat problem in a rod of length 1,
     \begin{gather*}
         \mu_t = \mu_{xx}, \qquad 0 < x< 1, \quad t > 0, \\
@@ -131,6 +204,90 @@
         \item You should be finding a significant change in your answers with the new right boundary condition. Please explain. Your explanation should address directly the effect of the sign change on your results.
     \end{enumerate}
 \end{problem}
+
+\begin{proof}[\textbf{Solution}] % Problem 2
+    \hfill
+    \begin{enumerate}[label=\alph*.)]
+        \item Let $\mu(x, t) = X(x)T(t)$. Since the initial condition $f$ is non-homogeneous, neither $X$ nor $T$ can be the zero function. Substituting into the given heat equation produces 
+        \begin{align*}
+            X(x)T'(t) = X''(x)T(t) &\implies \frac{X''(x)}{X(x)} = \frac{T'(t)}{T(t)} = -\lambda &&\implies \left\{\begin{array}{l}
+                X''(x) + \lambda X(x) = 0,\\
+                T'(t) + \lambda T(t) = 0,
+            \end{array}\right.
+            \intertext{with boundary conditions}
+            \mu(0,t) &\implies X(0)T(t) = 0 &&\implies X(0) = 0, \\
+            \mu(1, t) + \mu_x(1, t) &\implies X(1)T(t) + X'(1)T(t) = 0 &&\implies X(1) + X'(1).
+        \end{align*}
+        
+        This is a regular Sturm-Liouville boundary value problem in $X$. 
+       
+        \underline{If $\lambda = 0$,} then $X = \alpha x + \beta$ and $X' = \alpha$.  \begin{align*}
+        \shortintertext{Since $X(0)=0$,}
+        \alpha \cdot 0+\beta = 0 \implies &\beta = 0  &\text{so}  &  &X=\alpha x \text{ and } X' = \alpha.
+        \shortintertext{Since $X(1) + X'(1) = 0$,}
+        1\alpha + \alpha = 0 \implies & \alpha = 0 &\text{so} && X \equiv 0.
+        \end{align*}
+        Since $X\equiv 0$ cannot be an eigenfunction, \underline{$\lambda = 0$ is not an eigenvalue for the SL-BVP}.
+        
+        \underline{If $\lambda > 0$,} \begin{equation*}
+        X=C_1 \cos \left(\sqrt{\lambda}x\right) + C_2 \sin\left(\sqrt{\lambda}x\right), \qquad
+        X'=-C_1 \sqrt{\lambda}\sin \left(\sqrt{\lambda}x\right) + C_2 \sqrt{\lambda}\cos\left(\sqrt{\lambda}x\right)
+        \end{equation*}
+        \begin{gather*}
+        \shortintertext{Since $X(0)=0$,}
+        C_1 + 0 = 0 \implies  C_1 = 0  \qquad\text{so} \qquad \begin{cases}
+                X=C_2 \sin(\sqrt{\lambda}x), \\ X'=C_2\sqrt{\lambda}\cos(\sqrt{\lambda}x)\end{cases}
+        \shortintertext{Since $X(1) + X'(1) = 0$ and $C_2 \neq 0$,}
+        C_2\sin(\sqrt{\lambda}) + C_2\sqrt{\lambda}\cos(\sqrt{\lambda}) = 0 \quad \implies\quad \tan(\sqrt{\lambda}) = -\sqrt{\lambda}
+        \end{gather*}
+        Therefore, the eigenvalues $\lambda_n > 0$ are the solutions to the transcendental equation $\tan(\sqrt{\lambda_n}) = -\sqrt{\lambda_n}$ with corresponding eigenfunctions $X \sim \sin(\sqrt{\lambda_n}x)$.
+        
+        \underline{If $\lambda < 0$},  let $\lambda = -a^2$ with $a>0$. Then
+        \begin{equation*}
+        X = C_1 \cosh (a x) + C_2 \sinh (ax) \quad\text{and}\quad X' =  C_1 a\sinh (a x) + C_2 a\cosh (ax).
+        \end{equation*}
+        \begin{align*}
+        \shortintertext{Since $X(0)=0$,}
+        &&X(0) = C_1 \cosh (0) + C_2 \sinh (0) &= 0\\
+        &\iff& C_1 \cdot 1 + C_2 \cdot 0 &= 0 \\
+        &\iff& C_1 &= 0 &\text{so} &  &\begin{cases}
+        X=C_2 \sinh(ax), \\ X'=C_2a\cosh(ax)\end{cases}
+        \shortintertext{Since $X(1) + X'(1) = 0$ and $C_2 \neq 0$,}
+        &&\cancel{C_2} \sinh(a) + \cancel{C_2} a \cosh(a) &= 0\\
+        &\iff& \tanh(a) &= -a\\
+        \end{align*}
+        Since the transcendental equation $\tanh(a) = -a$ has no solutions for $a>0$, there are no eigenvalues $\lambda <0$. 
+
+        The formal solution to the given heat problem can therefore be expressed as
+        \begin{equation*}
+        \mu(x, t) = \sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t}.
+        \end{equation*}
+        Since $\mu(x, 0) = f(x) = 75$,
+        \begin{align*}
+            \mu(x, 0) = \sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) &= f(x) = 75
+            \shortintertext{so}
+            c_n = \frac{\displaystyle \int_0^1 f(x) X_n(x)\,\mathrm{d}x}{\displaystyle\int_0^1 X^2_n(x)\,\mathrm{d}x} &= \frac{\displaystyle 75\int_0^1  \sin(\sqrt{\lambda_n}x)\,\mathrm{d}x}{\displaystyle\int_0^1 \sin^2(\sqrt{\lambda_n}x)\,\mathrm{d}x} = \frac{\displaystyle \frac{75}{\sqrt{\lambda_n}}\left.\cos(\sqrt{\lambda_n}x)\right|_0^1}{\displaystyle \int_0^1 \left(\frac{1}{2} - \frac{1}{2} \cos(2\sqrt{\lambda_n}x)\right)\,\mathrm{d}x} \\
+            &= \frac{\displaystyle \frac{75}{\sqrt{\lambda_n}}\left(\cos(\sqrt{\lambda_n} )- 1\right)}{\displaystyle \frac{1}{2} - \frac{1}{4\sqrt{\lambda_n}}\left.\sin(2\sqrt{\lambda_n}x)\right|_0^1 } = \frac{\displaystyle \frac{75}{\sqrt{\lambda_n}}\left(\cos(\sqrt{\lambda_n} )- 1\right)}{\displaystyle \frac{1}{2} - \frac{1}{4\sqrt{\lambda_n}}\sin(2\sqrt{\lambda_n})}
+        \end{align*}
+        The complete solution is therefore
+        \begin{equation*}
+         \boxed{\mu(x, t) = \sum_{n=1}^\infty \left(\frac{\displaystyle 75\left(\cos(\sqrt{\lambda_n} )- 1\right)}{\displaystyle \frac{\sqrt{\lambda_n}}{2} - \frac{1}{4}\sin(2\sqrt{\lambda_n})} \right)\sin(\sqrt{\lambda_n}x) e^{-\lambda_n t}}.
+        \end{equation*}
+        where the eigenvalues $\lambda_n$ satisfy the transcendental equation $\tan(\sqrt{\lambda_n}) = -\sqrt{\lambda_n}$.
+        
+        \item \begin{equation*}
+        \lim\limits_{t \to \infty} \mu(x, t) =  \lim\limits_{t \to \infty}\sum_{n=1}^\infty c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t} \geq \sum_{n=1}^\infty \lim\limits_{t \to \infty} c_n \sin(\sqrt{\lambda_n}x) e^{-\lambda_n t} = \sum_{n=1}^\infty 0 = 0.
+        \end{equation*}
+        
+        \item Using the same setup as part a), we produce the regular SL-BVP
+        \begin{gather*}
+            X''(x) + \lambda X(x) = 0, \qquad 0 < x < 1, \\
+            X(0) = 0, \qquad X(1) - X'(1) = 0.
+        \end{gather*}
+        
+        
+    \end{enumerate}
+\end{proof}
 
 %\begin{problem}
 %    In class used the F.S.S of $f(x)=1$, $0 \leq x \leq \pi$,
