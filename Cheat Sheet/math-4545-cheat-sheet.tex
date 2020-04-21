@@ -1,0 +1,428 @@
+\documentclass[10pt,landscape,letterpaper]{article}
+\usepackage{multicol}
+%\usepackage{calc}
+%\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+%\usepackage{color,graphicx,overpic}
+%\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tabularx}
+% For Lin Alg section
+%\usepackage{tikz}
+%\usetikzlibrary{calc}
+%\usepackage{mathtools}
+
+%
+% Styling inspired by tex.stackexchange user "Dror" in this posting:
+% https://tex.stackexchange.com/questions/8827/preparing-cheat-sheets
+%
+
+\thispagestyle{fancy}
+\cfoot{\footnotesize Copyright \textcopyright \ 2020 Brian Schubert}
+\rfoot{\footnotesize Revised 2020-01-24}
+\lhead{MATH 4545\\Fourier Series and PDEs}
+\rhead{Spring 2020 \\ Prof. Solomon Jekel}
+%\chead{\large \underline{Midterm Exam ``Cheat Sheet"}}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\voffset}{-4pt}
+
+\geometry{top=0.7in,left=.5in,right=.5in,bottom=.5in}
+
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+% Custom squishing for \paragraph
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+    {0.5ex \@plus1ex \@minus.2ex}%
+    {-1em}%
+    {\normalfont\small\bfseries}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+% Notation Definitions
+\newcommand{\dd}[1]{\mathrm{d}#1}
+\newcommand{\diffop}[2][]{\frac{\dd#1}{\dd #2}}
+\newcommand{\matr}[1]{\mathbf{#1}}
+\newcommand{\bvec}[1]{\mathbf{#1}}
+\newcommand{\vecspace}[1]{\mathbb{#1}}
+\newcommand{\transp}{^\mathrm{T}}
+
+\newcommand\cheatsheetmargin{0.2cm}
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Preliminaries}} \\
+\end{center}
+
+\subsection{Basic Trig Identities}
+Let $n \in \mathbb{Z}^+_0$ and $k=2n+1$
+\begin{align*}
+\sin n \pi &= 0      &   \sin \frac{k\pi}{2} &= (-1)^n & \cosh x&= \frac{e^x + e^{-x}}{2} \\
+\cos n \pi &= (-1)^n &   \cos \frac{k\pi}{2} &= 0     & \sinh x&= \frac{e^x - e^{-x}}{2}\\
+\cosh 0 & = 1          & \sinh 0 &= 0       &  e^{x}  &=\cosh (x) + \sinh (x)  
+\end{align*}
+
+\subsection{Second Order Constant Coefficient Homogeneous ODEs}
+
+\begin{description}[style=unboxed,leftmargin=\cheatsheetmargin]
+    %    \item[Key Idea:] For a degree $n$ linear ODE, the homogeneous solution will be the linear combinations of $n$ functions, which are found by assuming $y=e^{rt}$ is a solution for some $r$ and substituting this into the ODE to solve for $r$.
+    \item[Form:] \qquad\quad $ay'' + by' + cy = 0, \quad a,b,c \in \mathbb{R}$
+    \item[Solved by:] \quad $y(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x}$\\
+    where
+    \begin{equation*} ar^2 + br + c = 0 , \qquad
+    r_1, r_2 = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+    \end{equation*}
+    
+    \item[Case 1.] $b^2 - 4ac > 0$:
+    \begin{equation*}
+    \boxed{y(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x}}
+    \end{equation*}
+    \item[Case 2.] $b^2 - 4ac =0$:\\
+    \begin{equation*}
+    r_1 = r_2 = \frac{-b}{2a} \implies \boxed{y(x) = C_1 e^{r_1 x} + C_2 \mathbf{x}e^{r_1 x}}
+    \end{equation*}
+    \item[Case 3.] $b^2 - 4ac < 0$:\\
+    $r_1, r_2 = p \pm qi$ where $p = \frac{-b}{2a}$ and $q = \frac{\sqrt{4ac - b^2 }}{2a}$. 
+    \begin{equation*}
+    \boxed{
+        y(x) = e^{px} \left[C_1 \sin \left(qx\right) + C_2 \cos \left(qx\right) \right]
+    }
+    \end{equation*}
+\end{description}
+
+\subsection{Orthogonality Relationships}
+For $n,m \in \mathbb{Z}^+$ and $L>0$,
+\begin{gather*}
+     \int_{-L}^{L} \sin^2 \left(\frac{n\pi x}{L}\right)\, \mathrm{d} x 
+     = \int_{-L}^{L} \cos^2 \left(\frac{n\pi x}{L}\right)\, \mathrm{d} x = \begin{cases}
+         0, & n \neq m\\
+         L, & n = m
+     \end{cases}\\
+      \int_{-L}^{L} \sin \left(\frac{n\pi x}{L}\right) \cos \left(\frac{n\pi x}{L}\right) \, \mathrm{d} x = 0.
+\end{gather*}
+
+
+\begin{center}
+    \Large{\underline{Fourier Series}} \\
+\end{center}
+Given $f$ defined on a symmetric interval $x\in[-L, L]$, the Full Fourier Series of $f$ is given by
+\begin{equation*}\boxed{
+f(x) \sim \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos \left(\frac{n\pi x}{L}\right) + \sum_{n=1}^{\infty} b_n \sin \left(\frac{n\pi x}{L}\right)}
+\end{equation*}
+where
+\begin{gather*}
+a_0 = \frac{1}{L}\int_{-L}^{L} f(x) \, \mathrm{d}x, \qquad 
+a_n = \frac{1}{L}\int_{-L}^{L} f(x) \cos \left(\frac{n\pi x}{L}\right)\, \mathrm{d}x \\
+b_n = \frac{1}{L}\int_{-L}^{L} f(x) \sin \left(\frac{n\pi x}{L}\right)\, \mathrm{d}x
+\end{gather*}
+
+\paragraph{Convergenve Theorem for Fourier Series}
+Let $f$ be piece-wise differentiable on $[-L, L]$. The F.S. of $f$ coverges to the periodic extension of $f$ whenever $f$ is continuous and to the average $\frac{1}{2} \left(f(a^-) + f(a^+)\right)$ in general.
+
+
+
+\subsection{Fourier Sine and Cosine Series}
+If $f$ defined on $x\in[-l, l]$ is $\begin{array}{c}\text{even}\\\text{odd}\end{array}$, then $\begin{array}{c}b_n = 0\\ a_0 = a_n = 0\end{array}$.
+
+Suppose $f$ is defined on $x\in [0, L]$.
+\begin{description}[style=unboxed,leftmargin=0pt]
+    \item[F.C.S] \begin{gather*}
+    f(x) \sim \frac{a_0}2 + \sum_{n=1}^\infty a_n \cos \left(\frac{n\pi x}{L}\right) \quad 
+    a_n = \frac{2}{L} \int_0^L f(x) \cos \left(\frac{n\pi x}{L}\right) \, \mathrm dx
+    \end{gather*}
+     \item[F.S.S] \begin{gather*}
+    f(x) \sim \sum_{n=1}^\infty b_n \sin \left(\frac{n\pi x}{L}\right) \ \qquad 
+    b_n = \frac{2}{L} \int_0^L f(x) \sin \left(\frac{n\pi x}{l}\right) \, \mathrm dx
+    \end{gather*}
+\end{description}
+
+
+
+\begin{center}
+    \Large{\underline{Sturm-Liouville Boundary}}
+    \Large{\underline{Value Problems}}
+\end{center}
+
+
+\paragraph{Regular SL-BVP:}
+\begin{gather*}
+(pf')' + qf + \lambda \sigma f=0   \qquad  f=f(x) \qquad   x \in[a, b]  \tag{1}\\
+K_1 f(a) = K_2 f'(a) = 0    \qquad       K_3 f(b) + K_4 f'(b) = 0      \tag{2}
+\end{gather*}
+where $p,q,\sigma$ are continuous on $(a,b)$, $p'$ is continuous, and $p,\sigma$ are positive
+
+\paragraph{Basic SL-BVP:} $p=1, q=0, \sigma = 1 \implies \boxed{f'' + \lambda f = 0}$
+\paragraph{Eigenvalues \& Eignevectors} The value(s) $\lambda$ for which the equation (1) with the boundary conditions (2) has non-zero solutions ar called the eigenvalues of the given problem. The corresponding functions are called eigenfunctions.
+
+\subsection{Four Basic SL-BVP}
+\begin{tabular}{ccll}
+    \textbf{Boundary Cond.} & \textbf{Eigenvalues} & \textbf{Eigenfunction} & $n\in$\\
+    $f(0) = 0 \ \ f(L) = 0$ & $n^2\pi^2/L^2$ & $\sin \left(n\pi x/L\right)$ & $\mathbb{Z}^+$ \\
+    $f'(0) = 0 \ \ f'(L) = 0$ & $n^2\pi^2/L^2$ & $\cos \left(n\pi x/L\right)$& $\mathbb{Z}^+_0$ \\
+    $f(0) = 0 \ \ f'(L) = 0$ & $\left[\frac{(2n-1)\pi}{2L}\right]^2$ & $ \sin \left(\frac{(2n-1)\pi x}{2L}\right)$& $\mathbb{Z}^+$ \\
+    $f'(0) = 0 \ \ f(L) = 0$ & $\left[\frac{(2n-1)\pi}{2L}\right]^2$ & $ \cos \left(\frac{(2n-1)\pi x}{2L}\right)$& $\mathbb{Z}^+$ \\
+\end{tabular}
+
+\subsection{Basic SL Theory}
+\begin{enumerate}
+    \item There are always an infinite number of eignenvalues to (1) and (2) where $\lambda_1 < \lambda_2 < \cdots$ and $\lambda_i \to \infty$.
+    
+    \item The eigenfunctions corresponding to distinct eigenvalues are always orthogonal with respect to $\sigma$: \begin{equation*}
+        \int_a^b f_n(x) f_m(x) \sigma(x)\, \mathrm{d}x = 0 \quad \text{for } n \neq m
+    \end{equation*}
+    
+    \item Every piecewise differenciable function on $[a,b]$ can be written as a sum of a complete set of eigenfunctions: \begin{equation*}\boxed{
+        g(x) \sim \sum_{n=1}^{\infty} a_n f_n (x) \quad\text{where}\quad a_n = \frac{\displaystyle \int_a^b g(x) f_n(x)\sigma(x)\, \mathrm dx}{\displaystyle\int_a^b f^2_n(x) \, \mathrm dx}}
+    \end{equation*}
+\end{enumerate}
+
+\begin{center}
+    \Large{\underline{The Heat Equation}}
+\end{center}
+{\normalsize
+\begin{gather*}
+\mu_t = k\mu_{xx} \quad \mu = \mu(x,t), \quad t>0\\
+x\in [0, L], \quad \mu(0,t) = \mu (L, t) = 0
+\end{gather*}
+}
+
+\paragraph{Separation of Variables Hypothesis} We assume
+\begin{equation*}
+    \mu(x,t) = X(x)T(t) \implies \frac{T'}{kT} = \frac{X''}{X} = - \lambda
+\end{equation*}
+so
+\begin{equation*}
+ T' \sim e^{-\lambda kt}, \quad X'' + \lambda X = 0
+\end{equation*}
+\paragraph{Fourier Formal Solution}
+\begin{equation*}
+\mu(x,t) = \sum_{n=1}^\infty c_n  e^{-\lambda kt} X_n(x)
+\end{equation*}
+
+\paragraph{Imposing Initial Conditions $\mu(x, 0) = f(x)$}
+\begin{equation*}
+    f(x) = \sum_{n=1}^\infty c_n X_n(x) \implies c_n =\frac{\displaystyle \int_0^L f(x) X_n(x)\, \mathrm dx}{\displaystyle\int_0^L X_n^2(x) \, \mathrm dx}
+\end{equation*}
+
+\begin{center}
+    \Large{\underline{The Wave Equation}}
+\end{center}
+{\normalsize
+    \begin{gather*}
+    \mu_{tt} = c^2\mu_{xx} \quad \mu = \mu(x,t), \quad t>0\\
+    x\in [0, L], \quad \mu(0,t) = \mu (L, t) = 0, \quad\mu_t(x, 0) = g(x)
+    \end{gather*}
+}
+
+\paragraph{Separation of Variables Hypothesis} We assume
+\begin{equation*}
+\mu(x,t) = X(x)T(t) \implies \frac{T''}{c^2 T} = \frac{X''}{X} = - \lambda
+\end{equation*}
+so
+\begin{equation*}
+X'' + \lambda X = 0, \quad T'' +\lambda c^2 T = 0
+\end{equation*}
+
+\paragraph{Formal Solution}
+\begin{equation*}
+    \mu(x,t) = \sum_{n=1}^\infty \left( b_{1n} \cos \left(\sqrt{\lambda c} t\right) + b_{2n} \sin\left(\sqrt{\lambda c}t\right) \right)X_n(x)
+\end{equation*}
+
+\paragraph{Computing the Coefficients}
+\begin{gather*}
+ \mu(x,0) = f(x) = \sum_{n=1}^\infty b_{1n} X_n(x) \implies b_{1n} =\frac{\displaystyle \int_0^L f(x) X_n(x)\, \mathrm dx}{\displaystyle\int_0^L X_n^2(x) \, \mathrm dx}\\
+  \mu(x,0)
+\end{gather*}
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+
+text
+\end{multicols}
+\end{document}
