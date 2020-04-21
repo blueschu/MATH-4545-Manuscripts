@@ -262,6 +262,41 @@ X''Y + Y''X = 0 \implies \frac{X''}{X} = \frac{-Y''}{Y} = -\lambda
 \shortintertext{so}
 X'' + \lambda X = 0, \qquad Y'' - \lambda Y = 0
 \end{gather*}
+\paragraph{Boundary Conditions in a Rectangle}
+
+To be completed.
+
+\begin{center}
+    \Large{\underline{Non-Homogeneous IVBP by }}
+    \Large{\underline{Eigenfunction Expansion}}
+\end{center}
+\section{The Heat Equation}
+{\normalsize
+    \begin{gather*}
+    \mu_t = k\mu_{xx} + q(x, t)\quad \mu = \mu(x,t), \quad t>0\\
+    \mu(0,t) = \mu (L, t) = 0, \quad \mu(x, 0) = f(x), \quad x\in [0, L]
+    \end{gather*}}
+\paragraph{Eigenfunction Assumption}
+\begin{gather*}
+\mu(x,t) = \sum_{n=1}^\infty c_n(t) X_n(x) \quad \text{(coefs. depend on $t$)}
+\intertext{Substituing into the PDE (using eigenfuncs. $X_n = \sin n \pi / L$)}
+\sum_{n=1}^\infty c'_n(t) \sin\left(\frac{n \pi x}{L}\right) = -k \left(\frac{n^2 \pi^2}{L^2}\right)\sin\left(\frac{n \pi x}{L}\right) + q(x,t).
+\intertext{To compute $n$th terms, we write $q$ as a series of eigenfuncs.:}
+q(x,t) = \sum_{n=1}^\infty q_n(t) \sin\left(\frac{n \pi x}{L}\right)
+\intertext{mathcing $n$th terms finally yields}
+c'_n(t) + k\frac{n^2 \pi^2}{L^2}c_n(t) = q_n(t).
+\intertext{which is a 1st order linear ODE for each $n$. To obtain a unique solution, we impose an initiatl condition $\mu(x, 0) = f(x):$}
+f(x) = \sum_{n=1}^\infty c_n (0) \sin\left(\frac{n \pi x}{L}\right).
+\end{gather*}
+\paragraph{Strategy}
+\begin{enumerate}[leftmargin=*,noitemsep]
+    \item Compute coefficients $q_n$ via expansion or matchup.
+    \item Compute coefficients $c_n(0)$ via expansion or matchup.
+    \item (Wave) Compute coeffs. $c'_n (0)$ via expansion or matchup
+    \item From coeffs., determine what terms $n$ yield ODEs.
+    \item Enumerate cases $n$. Solve ODE with initial condition(s) $c_n(0)$ (and $c'_n(0)$ for wave). 
+    \item Sum eigenfunctions with coefficients $c_n$ found from ODEs.
+\end{enumerate}
 
 
 \vspace{2cm}
