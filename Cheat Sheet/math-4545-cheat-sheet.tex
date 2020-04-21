@@ -1,19 +1,12 @@
 \documentclass[10pt,landscape,letterpaper]{article}
 \usepackage{multicol}
-%\usepackage{calc}
-%\usepackage{ifthen}
 \usepackage[landscape]{geometry}
 \usepackage{amsmath,amsthm,amsfonts,amssymb}
-%\usepackage{color,graphicx,overpic}
-%\usepackage{hyperref}
+\usepackage{mathtools}
 \usepackage{tabularx}
 \usepackage{fancyhdr}
 \usepackage{enumitem}
 \usepackage{tabularx}
-% For Lin Alg section
-%\usepackage{tikz}
-%\usetikzlibrary{calc}
-%\usepackage{mathtools}
 
 %
 % Styling inspired by tex.stackexchange user "Dror" in this posting:
@@ -22,7 +15,7 @@
 
 \thispagestyle{fancy}
 \cfoot{\footnotesize Copyright \textcopyright \ 2020 Brian Schubert}
-\rfoot{\footnotesize Revised 2020-01-24}
+\rfoot{\footnotesize Revised 2020-04-21}
 \lhead{MATH 4545\\Fourier Series and PDEs}
 \rhead{Spring 2020 \\ Prof. Solomon Jekel}
 %\chead{\large \underline{Midterm Exam ``Cheat Sheet"}}
@@ -88,37 +81,32 @@
 \subsection{Basic Trig Identities}
 Let $n \in \mathbb{Z}^+_0$ and $k=2n+1$
 \begin{align*}
-\sin n \pi &= 0      &   \sin \frac{k\pi}{2} &= (-1)^n & \cosh x&= \frac{e^x + e^{-x}}{2} \\
-\cos n \pi &= (-1)^n &   \cos \frac{k\pi}{2} &= 0     & \sinh x&= \frac{e^x - e^{-x}}{2}\\
-\cosh 0 & = 1          & \sinh 0 &= 0       &  e^{x}  &=\cosh (x) + \sinh (x)  
+\sin n \pi &= 0      &   \sin \frac{k\pi}{2} &= (-1)^n & & \cosh x= \frac{e^x + e^{-x}}{2} \\
+\cos n \pi &= (-1)^n &   \cos \frac{k\pi}{2} &= 0      & & \sinh x= \frac{e^x - e^{-x}}{2}\\
+\cosh 0 & = 1        & \sinh 0               &= 0      & & e^{x}  \cosh (x) + \sinh (x)  
 \end{align*}
 
 \subsection{Second Order Constant Coefficient Homogeneous ODEs}
 
 \begin{description}[style=unboxed,leftmargin=\cheatsheetmargin]
-    %    \item[Key Idea:] For a degree $n$ linear ODE, the homogeneous solution will be the linear combinations of $n$ functions, which are found by assuming $y=e^{rt}$ is a solution for some $r$ and substituting this into the ODE to solve for $r$.
     \item[Form:] \qquad\quad $ay'' + by' + cy = 0, \quad a,b,c \in \mathbb{R}$
-    \item[Solved by:] \quad $y(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x}$\\
-    where
-    \begin{equation*} ar^2 + br + c = 0 , \qquad
-    r_1, r_2 = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
-    \end{equation*}
+    \item[Solved by:] $y(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x}, 
+    \quad ar^2 + br + c = 0$
     
-    \item[Case 1.] $b^2 - 4ac > 0$:
-    \begin{equation*}
-    \boxed{y(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x}}
-    \end{equation*}
-    \item[Case 2.] $b^2 - 4ac =0$:\\
-    \begin{equation*}
-    r_1 = r_2 = \frac{-b}{2a} \implies \boxed{y(x) = C_1 e^{r_1 x} + C_2 \mathbf{x}e^{r_1 x}}
-    \end{equation*}
-    \item[Case 3.] $b^2 - 4ac < 0$:\\
-    $r_1, r_2 = p \pm qi$ where $p = \frac{-b}{2a}$ and $q = \frac{\sqrt{4ac - b^2 }}{2a}$. 
-    \begin{equation*}
-    \boxed{
-        y(x) = e^{px} \left[C_1 \sin \left(qx\right) + C_2 \cos \left(qx\right) \right]
+    {\setlength{\tabcolsep}{2em}
+    \begin{center}
+    \begin{tabular}{c|c}
+        \textbf{Case} & \textbf{Solution} \\
+        $b^2 - 4ac > 0$ & $y(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x}$\\
+        \hline
+        $b^2 - 4ac =0$ &  $\begin{array}{c}r_1 = r_2 = \frac{-b}{2a} \\[\smallskipamount]  y(x) = C_1 e^{r_1 x} + C_2 \mathbf{x}e^{r_1 x}\end{array}$ \\
+        \hline
+        $b^2 - 4ac < 0$ & $\begin{array}{c}r_1, r_2 = p \pm qi \quad \ \text{where}\\[\smallskipamount]
+         p = \frac{-b}{2a},\quad q = \frac{\sqrt{4ac - b^2 }}{2a} \\[\medskipamount]  
+        y(x) = C_1 e^{r_1 x} + C_2 \mathbf{x}e^{r_1 x}\end{array}$
+    \end{tabular}
+    \end{center}
     }
-    \end{equation*}
 \end{description}
 
 \subsection{Orthogonality Relationships}
@@ -147,7 +135,7 @@ a_n = \frac{1}{L}\int_{-L}^{L} f(x) \cos \left(\frac{n\pi x}{L}\right)\, \mathrm
 b_n = \frac{1}{L}\int_{-L}^{L} f(x) \sin \left(\frac{n\pi x}{L}\right)\, \mathrm{d}x
 \end{gather*}
 
-\paragraph{Convergenve Theorem for Fourier Series}
+\paragraph{Convergence Theorem for Fourier Series}
 Let $f$ be piece-wise differentiable on $[-L, L]$. The F.S. of $f$ coverges to the periodic extension of $f$ whenever $f$ is continuous and to the average $\frac{1}{2} \left(f(a^-) + f(a^+)\right)$ in general.
 
 
@@ -187,12 +175,14 @@ where $p,q,\sigma$ are continuous on $(a,b)$, $p'$ is continuous, and $p,\sigma$
 
 \subsection{Four Basic SL-BVP}
 \begin{tabular}{ccll}
-    \textbf{Boundary Cond.} & \textbf{Eigenvalues} & \textbf{Eigenfunction} & $n\in$\\
-    $f(0) = 0 \ \ f(L) = 0$ & $n^2\pi^2/L^2$ & $\sin \left(n\pi x/L\right)$ & $\mathbb{Z}^+$ \\
-    $f'(0) = 0 \ \ f'(L) = 0$ & $n^2\pi^2/L^2$ & $\cos \left(n\pi x/L\right)$& $\mathbb{Z}^+_0$ \\
-    $f(0) = 0 \ \ f'(L) = 0$ & $\left[\frac{(2n-1)\pi}{2L}\right]^2$ & $ \sin \left(\frac{(2n-1)\pi x}{2L}\right)$& $\mathbb{Z}^+$ \\
-    $f'(0) = 0 \ \ f(L) = 0$ & $\left[\frac{(2n-1)\pi}{2L}\right]^2$ & $ \cos \left(\frac{(2n-1)\pi x}{2L}\right)$& $\mathbb{Z}^+$ \\
+    \textbf{Boundary Cond.} & \textbf{Eigenvalues} & \textbf{Eigenfunc.} & $n\in$\\
+    $f(0) = f(L) = 0$ & $n^2\pi^2/L^2$ & $\sin \left(n\pi x/L\right)$ & $\mathbb{Z}^+$ \\
+    $f'(0) = f'(L) = 0$ & $n^2\pi^2/L^2$ & $\cos \left(n\pi x/L\right)$& $\mathbb{Z}^+_0$ \\
+    $f(0) = f'(L) = 0$ & $\left[\frac{(2n-1)\pi}{2L}\right]^2$ & $ \sin \left(\frac{(2n-1)\pi x}{2L}\right)$& $\mathbb{Z}^+$ \\
+    $f'(0) = f(L) = 0$ & $\left[\frac{(2n-1)\pi}{2L}\right]^2$ & $ \cos \left(\frac{(2n-1)\pi x}{2L}\right)$& $\mathbb{Z}^+$ \\
 \end{tabular}
+
+\textbf{Note:} For all Four Basic SL-BVPs, $\int_0^L X_n^2(x) \,\mathrm{d}x = \frac{1}{2}$.
 
 \subsection{Basic SL Theory}
 \begin{enumerate}
@@ -207,24 +197,23 @@ where $p,q,\sigma$ are continuous on $(a,b)$, $p'$ is continuous, and $p,\sigma$
     \end{equation*}
 \end{enumerate}
 
+\columnbreak
+
 \begin{center}
-    \Large{\underline{The Heat Equation}}
+    \Large{\underline{Separation of Variables}}
 \end{center}
+\section{The Heat Equation \textnormal{\small ``Diffusion'' of Energy}}
 {\normalsize
 \begin{gather*}
 \mu_t = k\mu_{xx} \quad \mu = \mu(x,t), \quad t>0\\
 x\in [0, L], \quad \mu(0,t) = \mu (L, t) = 0
-\end{gather*}
-}
-
+\end{gather*}}
 \paragraph{Separation of Variables Hypothesis} We assume
-\begin{equation*}
+\begin{gather*}
     \mu(x,t) = X(x)T(t) \implies \frac{T'}{kT} = \frac{X''}{X} = - \lambda
-\end{equation*}
-so
-\begin{equation*}
+    \shortintertext{so}
  T' \sim e^{-\lambda kt}, \quad X'' + \lambda X = 0
-\end{equation*}
+\end{gather*}
 \paragraph{Fourier Formal Solution}
 \begin{equation*}
 \mu(x,t) = \sum_{n=1}^\infty c_n  e^{-\lambda kt} X_n(x)
@@ -235,24 +224,18 @@ so
     f(x) = \sum_{n=1}^\infty c_n X_n(x) \implies c_n =\frac{\displaystyle \int_0^L f(x) X_n(x)\, \mathrm dx}{\displaystyle\int_0^L X_n^2(x) \, \mathrm dx}
 \end{equation*}
 
-\begin{center}
-    \Large{\underline{The Wave Equation}}
-\end{center}
+\section{The Wave Equation  \textnormal{\small ``Propagation'' of Energy}}
 {\normalsize
     \begin{gather*}
     \mu_{tt} = c^2\mu_{xx} \quad \mu = \mu(x,t), \quad t>0\\
     x\in [0, L], \quad \mu(0,t) = \mu (L, t) = 0, \quad\mu_t(x, 0) = g(x)
-    \end{gather*}
-}
-
+    \end{gather*}}
 \paragraph{Separation of Variables Hypothesis} We assume
-\begin{equation*}
+\begin{gather*}
 \mu(x,t) = X(x)T(t) \implies \frac{T''}{c^2 T} = \frac{X''}{X} = - \lambda
-\end{equation*}
-so
-\begin{equation*}
+\shortintertext{so}
 X'' + \lambda X = 0, \quad T'' +\lambda c^2 T = 0
-\end{equation*}
+\end{gather*}
 
 \paragraph{Formal Solution}
 \begin{equation*}
@@ -262,167 +245,87 @@ X'' + \lambda X = 0, \quad T'' +\lambda c^2 T = 0
 \paragraph{Computing the Coefficients}
 \begin{gather*}
  \mu(x,0) = f(x) = \sum_{n=1}^\infty b_{1n} X_n(x) \implies b_{1n} =\frac{\displaystyle \int_0^L f(x) X_n(x)\, \mathrm dx}{\displaystyle\int_0^L X_n^2(x) \, \mathrm dx}\\
-  \mu(x,0)
+  \mu_t(x,0) = g(x) = \sum_{n=1}^\infty \sqrt{\lambda c}b_{2n} X_n(x)  \Rightarrow \sqrt{\lambda c}b_{2n} =\frac{\displaystyle \int_0^L g(x) X_n(x)\, \mathrm dx}{\displaystyle\int_0^L X_n^2(x) \, \mathrm dx}
 \end{gather*}
 
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
-
-text
+\paragraph{d'Alembert's Solution}
+Assume $\mu_t(x, 0) = 0$, i.e. the wave starts from rest.
+\begin{equation*}
+\mu(x,t) = \frac{1}{2} F(x + ct) + \frac{1}{2} F(x-ct)
+\end{equation*}
+where $F$ is the odd periodic extension of the initial condition $f$. I.e., to get $\mu(x,t)$, take the initial $f(x)$, translate the odd periodic extension $ct$ units to the left, $ct$ units to the right, and average on $[0, L]$.
+
+\section{Laplace's Equation $\mu_{t} = k(\mu_{xx} + \mu_{yy})$}
+We assume $\mu_t = 0$. The resulting solution is called steady state.
+Assuming $\mu = XY$, \begin{gather*}
+X''Y + Y''X = 0 \implies \frac{X''}{X} = \frac{-Y''}{Y} = -\lambda
+\shortintertext{so}
+X'' + \lambda X = 0, \qquad Y'' - \lambda Y = 0
+\end{gather*}
+
+
+\vspace{2cm}
+
+.
+
+\vspace{2cm}
+
+.
+
+\vspace{2cm}
+
+.
+
+\vspace{2cm}
+
+.
+
+\vspace{2cm}
+
+.
+
+\vspace{2cm}
+
+.
+
+\vspace{2cm}
+
+.
+
+\vspace{2cm}
+
+.
+
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
+%
+%text
 \end{multicols}
 \end{document}
