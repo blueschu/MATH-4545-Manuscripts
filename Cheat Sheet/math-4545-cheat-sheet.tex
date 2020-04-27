@@ -1,0 +1,311 @@
+\documentclass[10pt,landscape,letterpaper]{article}
+\usepackage{multicol}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tabularx}
+
+%
+% Styling inspired by tex.stackexchange user "Dror" in this posting:
+% https://tex.stackexchange.com/questions/8827/preparing-cheat-sheets
+%
+
+\thispagestyle{fancy}
+\cfoot{\footnotesize Copyright \textcopyright \ 2020 Brian Schubert}
+\rfoot{\footnotesize Revised 2020-04-21}
+\lhead{MATH 4545\\Fourier Series and PDEs}
+\rhead{Spring 2020 \\ Prof. Solomon Jekel}
+%\chead{\large \underline{Midterm Exam ``Cheat Sheet"}}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\voffset}{-4pt}
+
+\geometry{top=0.7in,left=.5in,right=.5in,bottom=.5in}
+
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+% Custom squishing for \paragraph
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+    {0.5ex \@plus1ex \@minus.2ex}%
+    {-1em}%
+    {\normalfont\small\bfseries}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+% Notation Definitions
+\newcommand{\dd}[1]{\mathrm{d}#1}
+\newcommand{\diffop}[2][]{\frac{\dd#1}{\dd #2}}
+\newcommand{\matr}[1]{\mathbf{#1}}
+\newcommand{\bvec}[1]{\mathbf{#1}}
+\newcommand{\vecspace}[1]{\mathbb{#1}}
+\newcommand{\transp}{^\mathrm{T}}
+
+\newcommand\cheatsheetmargin{0.2cm}
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Preliminaries}} \\
+\end{center}
+
+\subsection{Basic Trig Identities}
+Let $n \in \mathbb{Z}^+_0$ and $k=2n+1$
+\begin{align*}
+\sin n \pi &= 0      &   \sin \frac{k\pi}{2} &= (-1)^n & & \cosh x= \frac{e^x + e^{-x}}{2} \\
+\cos n \pi &= (-1)^n &   \cos \frac{k\pi}{2} &= 0      & & \sinh x= \frac{e^x - e^{-x}}{2}\\
+\cosh 0 & = 1        & \sinh 0               &= 0      & & e^{x}  \cosh (x) + \sinh (x)  
+\end{align*}
+
+\subsection{Second Order Constant Coefficient Homogeneous ODEs}
+
+\begin{description}[style=unboxed,leftmargin=\cheatsheetmargin]
+    \item[Form:] \qquad\quad $ay'' + by' + cy = 0, \quad a,b,c \in \mathbb{R}$
+    \item[Solved by:] $y(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x}, 
+    \quad ar^2 + br + c = 0$
+    
+    {\setlength{\tabcolsep}{2em}
+    \begin{center}
+    \begin{tabular}{c|c}
+        \textbf{Case} & \textbf{Solution} \\
+        $b^2 - 4ac > 0$ & $y(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x}$\\
+        \hline
+        $b^2 - 4ac =0$ &  $\begin{array}{c}r_1 = r_2 = \frac{-b}{2a} \\[\smallskipamount]  y(x) = C_1 e^{r_1 x} + C_2 \mathbf{x}e^{r_1 x}\end{array}$ \\
+        \hline
+        $b^2 - 4ac < 0$ & $\begin{array}{c}r_1, r_2 = p \pm qi \quad \ \text{where}\\[\smallskipamount]
+         p = \frac{-b}{2a},\quad q = \frac{\sqrt{4ac - b^2 }}{2a} \\[\medskipamount]  
+        y(x) = C_1 e^{r_1 x} + C_2 \mathbf{x}e^{r_1 x}\end{array}$
+    \end{tabular}
+    \end{center}
+    }
+\end{description}
+
+\subsection{Orthogonality Relationships}
+For $n,m \in \mathbb{Z}^+$ and $L>0$,
+\begin{gather*}
+     \int_{-L}^{L} \sin^2 \left(\frac{n\pi x}{L}\right)\, \mathrm{d} x 
+     = \int_{-L}^{L} \cos^2 \left(\frac{n\pi x}{L}\right)\, \mathrm{d} x = \begin{cases}
+         0, & n \neq m\\
+         L, & n = m
+     \end{cases}\\
+      \int_{-L}^{L} \sin \left(\frac{n\pi x}{L}\right) \cos \left(\frac{n\pi x}{L}\right) \, \mathrm{d} x = 0.
+\end{gather*}
+
+
+\begin{center}
+    \Large{\underline{Fourier Series}} \\
+\end{center}
+Given $f$ defined on a symmetric interval $x\in[-L, L]$, the Full Fourier Series of $f$ is given by
+\begin{equation*}\boxed{
+f(x) \sim \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos \left(\frac{n\pi x}{L}\right) + \sum_{n=1}^{\infty} b_n \sin \left(\frac{n\pi x}{L}\right)}
+\end{equation*}
+where
+\begin{gather*}
+a_0 = \frac{1}{L}\int_{-L}^{L} f(x) \, \mathrm{d}x, \qquad 
+a_n = \frac{1}{L}\int_{-L}^{L} f(x) \cos \left(\frac{n\pi x}{L}\right)\, \mathrm{d}x \\
+b_n = \frac{1}{L}\int_{-L}^{L} f(x) \sin \left(\frac{n\pi x}{L}\right)\, \mathrm{d}x
+\end{gather*}
+
+\paragraph{Convergence Theorem for Fourier Series}
+Let $f$ be piece-wise differentiable on $[-L, L]$. The F.S. of $f$ coverges to the periodic extension of $f$ whenever $f$ is continuous and to the average $\frac{1}{2} \left(f(a^-) + f(a^+)\right)$ in general.
+
+
+
+\subsection{Fourier Sine and Cosine Series}
+If $f$ defined on $x\in[-l, l]$ is $\begin{array}{c}\text{even}\\\text{odd}\end{array}$, then $\begin{array}{c}b_n = 0\\ a_0 = a_n = 0\end{array}$.
+
+Suppose $f$ is defined on $x\in [0, L]$.
+\begin{description}[style=unboxed,leftmargin=0pt]
+    \item[F.C.S] \begin{gather*}
+    f(x) \sim \frac{a_0}2 + \sum_{n=1}^\infty a_n \cos \left(\frac{n\pi x}{L}\right) \quad 
+    a_n = \frac{2}{L} \int_0^L f(x) \cos \left(\frac{n\pi x}{L}\right) \, \mathrm dx
+    \end{gather*}
+     \item[F.S.S] \begin{gather*}
+    f(x) \sim \sum_{n=1}^\infty b_n \sin \left(\frac{n\pi x}{L}\right) \ \qquad 
+    b_n = \frac{2}{L} \int_0^L f(x) \sin \left(\frac{n\pi x}{l}\right) \, \mathrm dx
+    \end{gather*}
+\end{description}
+
+
+
+\begin{center}
+    \Large{\underline{Sturm-Liouville Boundary}}
+    \Large{\underline{Value Problems}}
+\end{center}
+
+
+\paragraph{Regular SL-BVP:}
+\begin{gather*}
+(pf')' + qf + \lambda \sigma f=0   \qquad  f=f(x) \qquad   x \in[a, b]  \tag{1}\\
+K_1 f(a) = K_2 f'(a) = 0    \qquad       K_3 f(b) + K_4 f'(b) = 0      \tag{2}
+\end{gather*}
+where $p,q,\sigma$ are continuous on $(a,b)$, $p'$ is continuous, and $p,\sigma$ are positive
+
+\paragraph{Basic SL-BVP:} $p=1, q=0, \sigma = 1 \implies \boxed{f'' + \lambda f = 0}$
+\paragraph{Eigenvalues \& Eignevectors} The value(s) $\lambda$ for which the equation (1) with the boundary conditions (2) has non-zero solutions ar called the eigenvalues of the given problem. The corresponding functions are called eigenfunctions.
+
+\subsection{Four Basic SL-BVP}
+\begin{tabular}{ccll}
+    \textbf{Boundary Cond.} & \textbf{Eigenvalues} & \textbf{Eigenfunc.} & $n\in$\\
+    $f(0) = f(L) = 0$ & $n^2\pi^2/L^2$ & $\sin \left(n\pi x/L\right)$ & $\mathbb{Z}^+$ \\
+    $f'(0) = f'(L) = 0$ & $n^2\pi^2/L^2$ & $\cos \left(n\pi x/L\right)$& $\mathbb{Z}^+_0$ \\
+    $f(0) = f'(L) = 0$ & $\left[\frac{(2n-1)\pi}{2L}\right]^2$ & $ \sin \left(\frac{(2n-1)\pi x}{2L}\right)$& $\mathbb{Z}^+$ \\
+    $f'(0) = f(L) = 0$ & $\left[\frac{(2n-1)\pi}{2L}\right]^2$ & $ \cos \left(\frac{(2n-1)\pi x}{2L}\right)$& $\mathbb{Z}^+$ \\
+\end{tabular}
+
+\textbf{Note:} For all Four Basic SL-BVPs, $\int_0^L X_n^2(x) \,\mathrm{d}x = \frac{1}{2}$.
+
+\subsection{Basic SL Theory}
+\begin{enumerate}
+    \item There are always an infinite number of eignenvalues to (1) and (2) where $\lambda_1 < \lambda_2 < \cdots$ and $\lambda_i \to \infty$.
+    
+    \item The eigenfunctions corresponding to distinct eigenvalues are always orthogonal with respect to $\sigma$: \begin{equation*}
+        \int_a^b f_n(x) f_m(x) \sigma(x)\, \mathrm{d}x = 0 \quad \text{for } n \neq m
+    \end{equation*}
+    
+    \item Every piecewise differenciable function on $[a,b]$ can be written as a sum of a complete set of eigenfunctions: \begin{equation*}\boxed{
+        g(x) \sim \sum_{n=1}^{\infty} a_n f_n (x) \quad\text{where}\quad a_n = \frac{\displaystyle \int_a^b g(x) f_n(x)\sigma(x)\, \mathrm dx}{\displaystyle\int_a^b f^2_n(x) \, \mathrm dx}}
+    \end{equation*}
+\end{enumerate}
+
+\columnbreak
+
+\begin{center}
+    \Large{\underline{Separation of Variables}}
+\end{center}
+\section{The Heat Equation \textnormal{\small ``Diffusion'' of Energy}}
+{\normalsize
+\begin{gather*}
+\mu_t = k\mu_{xx} \quad \mu = \mu(x,t), \quad t>0\\
+x\in [0, L], \quad \mu(0,t) = \mu (L, t) = 0
+\end{gather*}}
+\paragraph{Separation of Variables Hypothesis} We assume
+\begin{gather*}
+    \mu(x,t) = X(x)T(t) \implies \frac{T'}{kT} = \frac{X''}{X} = - \lambda
+    \shortintertext{so}
+ T' \sim e^{-\lambda kt}, \quad X'' + \lambda X = 0
+\end{gather*}
+\paragraph{Fourier Formal Solution}
+\begin{equation*}
+\mu(x,t) = \sum_{n=1}^\infty c_n  e^{-\lambda kt} X_n(x)
+\end{equation*}
+
+\paragraph{Imposing Initial Conditions $\mu(x, 0) = f(x)$}
+\begin{equation*}
+    f(x) = \sum_{n=1}^\infty c_n X_n(x) \implies c_n =\frac{\displaystyle \int_0^L f(x) X_n(x)\, \mathrm dx}{\displaystyle\int_0^L X_n^2(x) \, \mathrm dx}
+\end{equation*}
+
+\section{The Wave Equation  \textnormal{\small ``Propagation'' of Energy}}
+{\normalsize
+    \begin{gather*}
+    \mu_{tt} = c^2\mu_{xx} \quad \mu = \mu(x,t), \quad t>0\\
+    x\in [0, L], \quad \mu(0,t) = \mu (L, t) = 0, \quad\mu_t(x, 0) = g(x)
+    \end{gather*}}
+\paragraph{Separation of Variables Hypothesis} We assume
+\begin{gather*}
+\mu(x,t) = X(x)T(t) \implies \frac{T''}{c^2 T} = \frac{X''}{X} = - \lambda
+\shortintertext{so}
+X'' + \lambda X = 0, \quad T'' +\lambda c^2 T = 0
+\end{gather*}
+
+\paragraph{Formal Solution}
+\begin{equation*}
+    \mu(x,t) = \sum_{n=1}^\infty \left( b_{1n} \cos \left(\sqrt{\lambda c} t\right) + b_{2n} \sin\left(\sqrt{\lambda c}t\right) \right)X_n(x)
+\end{equation*}
+
+\paragraph{Computing the Coefficients}
+\begin{gather*}
+ \mu(x,0) = f(x) = \sum_{n=1}^\infty b_{1n} X_n(x) \implies b_{1n} =\frac{\displaystyle \int_0^L f(x) X_n(x)\, \mathrm dx}{\displaystyle\int_0^L X_n^2(x) \, \mathrm dx}\\
+  \mu_t(x,0) = g(x) = \sum_{n=1}^\infty \sqrt{\lambda c}b_{2n} X_n(x)  \Rightarrow \sqrt{\lambda c}b_{2n} =\frac{\displaystyle \int_0^L g(x) X_n(x)\, \mathrm dx}{\displaystyle\int_0^L X_n^2(x) \, \mathrm dx}
+\end{gather*}
+
+\paragraph{d'Alembert's Solution}
+Assume $\mu_t(x, 0) = 0$, i.e. the wave starts from rest.
+\begin{equation*}
+\mu(x,t) = \frac{1}{2} F(x + ct) + \frac{1}{2} F(x-ct)
+\end{equation*}
+where $F$ is the odd periodic extension of the initial condition $f$. I.e., to get $\mu(x,t)$, take the initial $f(x)$, translate the odd periodic extension $ct$ units to the left, $ct$ units to the right, and average on $[0, L]$.
+
+\section{Laplace's Equation $\mu_{t} = k(\mu_{xx} + \mu_{yy})$}
+We assume $\mu_t = 0$. The resulting solution is called steady state.
+Assuming $\mu = XY$, \begin{gather*}
+X''Y + Y''X = 0 \implies \frac{X''}{X} = \frac{-Y''}{Y} = -\lambda
+\shortintertext{so}
+X'' + \lambda X = 0, \qquad Y'' - \lambda Y = 0
+\end{gather*}
+\paragraph{Boundary Conditions in a Rectangle}
+
+To be completed.
+
+\begin{center}
+    \Large{\underline{Non-Homogeneous IVBP by }}
+    \Large{\underline{Eigenfunction Expansion}}
+\end{center}
+\section{The Heat Equation}
+{\normalsize
+    \begin{gather*}
+    \mu_t = k\mu_{xx} + q(x, t)\quad \mu = \mu(x,t), \quad t>0\\
+    \mu(0,t) = \mu (L, t) = 0, \quad \mu(x, 0) = f(x), \quad x\in [0, L]
+    \end{gather*}}
+\paragraph{Eigenfunction Assumption}
+\begin{gather*}
+\mu(x,t) = \sum_{n=1}^\infty c_n(t) X_n(x) \quad \text{(coefs. depend on $t$)}
+\intertext{Substituing into the PDE (using eigenfuncs. $X_n = \sin n \pi / L$)}
+\sum_{n=1}^\infty c'_n(t) \sin\left(\frac{n \pi x}{L}\right) = -k \left(\frac{n^2 \pi^2}{L^2}\right)\sin\left(\frac{n \pi x}{L}\right) + q(x,t).
+\intertext{To compute $n$th terms, we write $q$ as a series of eigenfuncs.:}
+q(x,t) = \sum_{n=1}^\infty q_n(t) \sin\left(\frac{n \pi x}{L}\right)
+\intertext{mathcing $n$th terms finally yields}
+c'_n(t) + k\frac{n^2 \pi^2}{L^2}c_n(t) = q_n(t).
+\intertext{which is a 1st order linear ODE for each $n$. To obtain a unique solution, we impose an initiatl condition $\mu(x, 0) = f(x):$}
+f(x) = \sum_{n=1}^\infty c_n (0) \sin\left(\frac{n \pi x}{L}\right).
+\end{gather*}
+\paragraph{Strategy}
+\begin{enumerate}[leftmargin=*,noitemsep]
+    \item Compute coefficients $q_n$ via expansion or matchup.
+    \item Compute coefficients $c_n(0)$ via expansion or matchup.
+    \item (Wave) Compute coeffs. $c'_n (0)$ via expansion or matchup
+    \item From coeffs., determine what terms $n$ yield ODEs.
+    \item Enumerate cases $n$. Solve ODE with initial condition(s) $c_n(0)$ (and $c'_n(0)$ for wave). 
+    \item Sum eigenfunctions with coefficients $c_n$ found from ODEs.
+\end{enumerate}
+
+
+\vspace{10cm}\null
+Document not completed. Missing sections:
+\begin{itemize}
+    \item Heat equation in rectangle
+    \item Heat equation in circle
+    \item Laplace transform
+    \item Fourier transform
+\end{itemize}
+\end{multicols}
+\end{document}
